@@ -1,22 +1,20 @@
 {
 	"couples": [
 		{
-			"name": "Brian \"Shipupi\" Ail",
+			"name": "Hardianto Jouga Pratama, S.Kom.",
 			"social": [
-				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/brian.ail/" },
-				{ "icon": "fab fa-facebook", "link": "https://www.facebook.com/brian.ail/" }
+				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/hardianto.p/" }
 			],
-			"description": "El novio",
-			"thumb": "/casamiento/couples/couple-male.png"
+			"description": "Anak pertama dari pasangan Bapak Drs. Tridjoko Harsono dengan Ibu Resita Agustina",
+			"thumb": "/wedding-invitation/couples/couple-male.jpg"
 		},
 		{
-			"name": "Maria Celeste \"Chelu\" del Fueyo",
+			"name": "Nanda Ramadhanti, S.Pd.",
 			"social": [
-				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/mariachelu/" },
-				{ "icon": "fab fa-facebook", "link": "https://www.facebook.com/mariaceleste.delfueyo" }
+				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/nandaramad/" }
 			],
-			"description": "La novia",
-			"thumb": "/casamiento/couples/couple-female.png"
+			"description": "Anak kedua dari pasangan Bapak Iskandar (Alm) dengan Ibu Yukartina",
+			"thumb": "/wedding-invitation/couples/couple-female.jpg"
 		}
 	]
 }

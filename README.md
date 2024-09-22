@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h3 align="center">Diundang - Theme Official</h3>
 <p align="center">Official Theme By Diundang - Digital Wedding Invitation</p>
 <img src="./src/assets/banner.png" />
@@ -51,3 +52,7 @@
 <br>
 Last edited on : 15/05/2022
 
+=======
+# wedding-invitation
+Wedding Invitation Template
+>>>>>>> 2b3607a4cf8bf4edfd415b4595831141ee6d8aa5
