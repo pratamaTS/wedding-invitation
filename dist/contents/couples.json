@@ -1,0 +1,22 @@
+{
+	"couples": [
+		{
+			"name": "Brian \"Shipupi\" Ail",
+			"social": [
+				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/brian.ail/" },
+				{ "icon": "fab fa-facebook", "link": "https://www.facebook.com/brian.ail/" }
+			],
+			"description": "El novio",
+			"thumb": "/casamiento/couples/couple-male.png"
+		},
+		{
+			"name": "Maria Celeste \"Chelu\" del Fueyo",
+			"social": [
+				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/mariachelu/" },
+				{ "icon": "fab fa-facebook", "link": "https://www.facebook.com/mariaceleste.delfueyo" }
+			],
+			"description": "La novia",
+			"thumb": "/casamiento/couples/couple-female.png"
+		}
+	]
+}
