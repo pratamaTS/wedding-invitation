@@ -3,15 +3,23 @@
     <section class="section-container">
       <HeaderSection class="max-w-9/12" title="Video Kami" subtitle=""></HeaderSection>
     </section>
-    <VueVideoPlayer data-aos="zoom-in" class="w-10/12 mx-auto" :src="source" />
+    <div data-aos="zoom-in" class="w-10/12 mx-auto">
+      <iframe
+        class="w-full aspect-video"
+        :src="youtubeEmbedUrl"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
   </section>
 </template>
 
 <script setup>
 
-import VueVideoPlayer from 'vue3-player-video'
 import HeaderSection from '@/components/HeaderSection.vue'
 
-const source = 'https://dl.dropbox.com/s/ggu2nnvsddf45he/Tretan%20Muslim%20_%20Luna%20Prewedding%20Video%20%28%20720%20X%201280%20%29.mp4?dl=2'
+// Modify the YouTube link to the embed format
+const youtubeEmbedUrl = 'https://www.youtube.com/embed/wHqYL6p0rO8'
 
 </script>
