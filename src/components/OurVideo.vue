@@ -20,6 +20,6 @@
 import HeaderSection from '@/components/HeaderSection.vue'
 
 // Modify the YouTube link to the embed format
-const youtubeEmbedUrl = 'https://www.youtube.com/embed/wHqYL6p0rO8'
+const youtubeEmbedUrl = 'https://www.youtube.com/embed/auKi1IHzn1Q'
 
 </script>

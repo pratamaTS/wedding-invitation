@@ -17,7 +17,7 @@
         </div>
         <div class="text-sm">
           <p class="font-medium">Kepada Bapak/Ibu Yang Terhormat</p>
-          <p class="font-medium text-lg my-2">Saudara/i {{ query.first }}</p>
+          <p class="font-medium text-lg my-2">Saudara/i {{ query.guest }}</p>
           <p class="font-medium my-2">Izinkan kami turut mengundang anda dalam acara kami</p>
         </div>
       </div>
@@ -36,7 +36,7 @@ const couples = ['Youga', 'Nanda'] // Customize the couple's names
 const route = useRoute()
 let query = computed(() => route.query)
 
-if (route.query.first === undefined) query = { first: '' }
+if (route.query.guest === undefined) query = { guest: '' }
 </script>
 
 <style scoped>
@@ -78,9 +78,9 @@ p {
   border-radius: 15px;
   max-width: 90%;
   padding: 2rem;
-  padding-top: 70px;
+  padding-top: 100px;
   position: absolute; /* Absolute positioning relative to the parent section */
-  top: 28%; /* Center vertically in the section */
+  top: 24%; /* Center vertically in the section */
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -60%); /* Adjust for exact centering and move more top */
   animation: slideUp 1s ease-out forwards; /* Apply animation */

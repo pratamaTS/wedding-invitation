@@ -30,6 +30,31 @@ const reffEndTime = 255; // Example: 30 seconds reff, up to 2:35
 
 const giftAction = () => setTimeout(() => { document.querySelector('#envelope').scrollIntoView({ behavior: 'smooth' }) }, 300)
 
+// Function to handle autoplay with a fallback
+const playMusicOnInteraction = async () => {
+  if (!hasInteracted.value) {
+    try {
+      audio.currentTime = reffStartTime
+      const promise = audio.play()
+      if (promise !== undefined) {
+        promise.then(() => {
+          musicIcon.value = 'fa-solid fa-volume-high'
+          isPlaying.value = true
+          hasInteracted.value = true
+          // Remove listeners after interaction
+          removeInteractionListeners()
+        }).catch(error => {
+          console.log('Autoplay prevented. Showing play button.')
+          musicIcon.value = 'fa-solid fa-volume-off'
+          isPlaying.value = false
+        })
+      }
+    } catch (error) {
+      console.error('Playback failed after interaction:', error)
+    }
+  }
+}
+
 // Action to toggle music and icon
 const backgroundMusicAction = () => {
   if (isPlaying.value) {
@@ -51,48 +76,31 @@ audio.addEventListener('timeupdate', () => {
   }
 })
 
-const playMusicOnInteraction = async () => {
-  if (!hasInteracted.value) {
-    try {
-      audio.currentTime = reffStartTime;
-      await audio.play();
-      musicIcon.value = 'fa-solid fa-volume-high';
-      isPlaying.value = true;
-      hasInteracted.value = true; // Mark as interacted so it doesn't play again
-      // Remove listeners after interaction
-      removeInteractionListeners();
-    } catch (error) {
-      console.error('Playback failed after interaction:', error);
-    }
-  }
-}
-
 // Add event listeners for interaction
 const addInteractionListeners = () => {
-  window.addEventListener('click', playMusicOnInteraction);
-  window.addEventListener('scroll', playMusicOnInteraction);
-  window.addEventListener('keydown', playMusicOnInteraction); // Keyboard interaction
+  window.addEventListener('click', playMusicOnInteraction)
+  window.addEventListener('scroll', playMusicOnInteraction)
+  window.addEventListener('tap', playMusicOnInteraction)
+  window.addEventListener('keydown', playMusicOnInteraction) // Keyboard interaction
 }
 
 // Remove event listeners after interaction
 const removeInteractionListeners = () => {
-  window.removeEventListener('click', playMusicOnInteraction);
-  window.removeEventListener('scroll', playMusicOnInteraction);
-  window.removeEventListener('keydown', playMusicOnInteraction);
+  window.removeEventListener('click', playMusicOnInteraction)
+  window.removeEventListener('scroll', playMusicOnInteraction)
+  window.removeEventListener('tap', playMusicOnInteraction)
+  window.removeEventListener('keydown', playMusicOnInteraction)
 }
 
 onMounted(() => {
-  // Only prepare audio, no autoplay (blocked by browser policies)
-  audio.currentTime = reffStartTime;
-
   // Add interaction listeners
-  addInteractionListeners();
-});
+  addInteractionListeners()
+})
 
 onUnmounted(() => {
   // Cleanup interaction listeners when component is destroyed
-  removeInteractionListeners();
-});
+  removeInteractionListeners()
+})
 </script>
 
 <style scoped>
