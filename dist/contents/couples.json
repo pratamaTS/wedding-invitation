@@ -6,7 +6,7 @@
 				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/hardianto.p/" }
 			],
 			"description": "Anak pertama dari pasangan Bapak Drs. Tridjoko Harsono dengan Ibu Resita Agustina",
-			"thumb": "/wedding-invitation/couples/couple-male.jpg"
+			"thumb": "/couples/couple-male.jpg"
 		},
 		{
 			"name": "Nanda Ramadhanti, S.Pd.",
@@ -14,7 +14,7 @@
 				{ "icon": "fab fa-instagram", "link": "https://www.instagram.com/nandaramad/" }
 			],
 			"description": "Anak kedua dari pasangan Bapak Iskandar (Alm) dengan Ibu Yukartina",
-			"thumb": "/wedding-invitation/couples/couple-female.jpg"
+			"thumb": "/couples/couple-female.jpg"
 		}
 	]
 }
