@@ -78,8 +78,9 @@ p {
   border-radius: 15px;
   max-width: 90%;
   padding: 2rem;
+  padding-top: 70px;
   position: absolute; /* Absolute positioning relative to the parent section */
-  top: 31%; /* Center vertically in the section */
+  top: 28%; /* Center vertically in the section */
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -60%); /* Adjust for exact centering and move more top */
   animation: slideUp 1s ease-out forwards; /* Apply animation */

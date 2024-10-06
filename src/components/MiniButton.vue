@@ -12,8 +12,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useState } from '@/stores/state.js'
+const hasInteracted = ref(false)
 import musicFile from '@/assets/musics/Vancouver Sleep Clinic - Someone to Stay (Audio).mp3' // Replace with the actual path
 
 const state = useState()
@@ -26,6 +27,8 @@ const audio = new Audio(musicFile) // Use the imported file for the audio source
 // Reff start and end time (in seconds)
 const reffStartTime = 0; // 2:05 in seconds
 const reffEndTime = 255; // Example: 30 seconds reff, up to 2:35
+
+const giftAction = () => setTimeout(() => { document.querySelector('#envelope').scrollIntoView({ behavior: 'smooth' }) }, 300)
 
 // Action to toggle music and icon
 const backgroundMusicAction = () => {
@@ -48,12 +51,48 @@ audio.addEventListener('timeupdate', () => {
   }
 })
 
-// Play music by default from the reff when the component is mounted
+const playMusicOnInteraction = async () => {
+  if (!hasInteracted.value) {
+    try {
+      audio.currentTime = reffStartTime;
+      await audio.play();
+      musicIcon.value = 'fa-solid fa-volume-high';
+      isPlaying.value = true;
+      hasInteracted.value = true; // Mark as interacted so it doesn't play again
+      // Remove listeners after interaction
+      removeInteractionListeners();
+    } catch (error) {
+      console.error('Playback failed after interaction:', error);
+    }
+  }
+}
+
+// Add event listeners for interaction
+const addInteractionListeners = () => {
+  window.addEventListener('click', playMusicOnInteraction);
+  window.addEventListener('scroll', playMusicOnInteraction);
+  window.addEventListener('keydown', playMusicOnInteraction); // Keyboard interaction
+}
+
+// Remove event listeners after interaction
+const removeInteractionListeners = () => {
+  window.removeEventListener('click', playMusicOnInteraction);
+  window.removeEventListener('scroll', playMusicOnInteraction);
+  window.removeEventListener('keydown', playMusicOnInteraction);
+}
+
 onMounted(() => {
-  audio.currentTime = reffStartTime
-  audio.play() // Play the music
-  musicIcon.value = 'fa-solid fa-volume-high' // Change icon to volume high
-})
+  // Only prepare audio, no autoplay (blocked by browser policies)
+  audio.currentTime = reffStartTime;
+
+  // Add interaction listeners
+  addInteractionListeners();
+});
+
+onUnmounted(() => {
+  // Cleanup interaction listeners when component is destroyed
+  removeInteractionListeners();
+});
 </script>
 
 <style scoped>
