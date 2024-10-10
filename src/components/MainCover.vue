@@ -20,16 +20,24 @@
           <p class="font-medium text-lg my-2">Saudara/i {{ query.guest }}</p>
           <p class="font-medium my-2">Izinkan kami turut mengundang anda dalam acara kami</p>
         </div>
+        
+        <div class="mt-12 text-center" v-show="buttonVisible">
+          <button @click="navigateToWeddingInvitation()" variant="outline-secondary" class="px-5 py-2 rounded-lg bg-gray-800 text-gray-100 mx-auto">
+            <i class="fa-regular fa-envelope"></i> Open
+          </button>
+        </div>
       </div>
     </section>
+    
   </section>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed} from 'vue'
 import { useRoute } from 'vue-router'
 import backgroundImage from '@/assets/images/prewedding-couple.jpg' // Set your background image path
-// import decoration from '@/assets/svg/decoration-2.svg'
+
+const emits = defineEmits(['open'])
 
 const couples = ['Youga', 'Nanda'] // Customize the couple's names
 
@@ -37,6 +45,15 @@ const route = useRoute()
 let query = computed(() => route.query)
 
 if (route.query.guest === undefined) query = { guest: '' }
+
+const buttonVisible = ref(true) // Initially, the button is not visible
+
+const navigateToWeddingInvitation = () => {
+  emits('open')
+  setTimeout(() => { 
+    document.querySelector('#firstSight').scrollIntoView({ behavior: 'smooth' }) 
+  }, 300)
+}
 </script>
 
 <style scoped>
@@ -46,8 +63,24 @@ if (route.query.guest === undefined) query = { guest: '' }
 
 .text-title {
   font-size: 2.5rem; /* Default font size for smaller screens */
-  color: rgb(248, 188, 84);
+  color: rgb(244, 163, 25);
   white-space: nowrap; /* Ensure names don't break into multiple lines */
+}
+
+.gold-button {
+  background-color: rgb(244, 163, 25); /* gold color */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.gold-button:hover {
+  background-color:  rgb(229, 145, 0); /* slightly darker gold on hover */
+}
+
+button i {
+  margin-right: 8px; /* Add space between the icon and text */
+  font-size: 1.2em; /* Adjust icon size if needed */
 }
 
 h1 {
@@ -72,15 +105,15 @@ p {
 
 /* Overlay box */
 .overlay-box {
-  background-color: rgba(187, 221, 249, 0.8); /* Translucent background */
-  backdrop-filter: blur(5px); /* Apply a blur effect */
+  background-color: rgba(193, 224, 249, 0.8); /* Translucent background */
+  backdrop-filter: blur(1px); /* Apply a blur effect */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
   border-radius: 15px;
   max-width: 90%;
-  padding: 2rem;
+  padding: 1.5rem;
   padding-top: 100px;
   position: absolute; /* Absolute positioning relative to the parent section */
-  top: 24%; /* Center vertically in the section */
+  top: 29%; /* Center vertically in the section */
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -60%); /* Adjust for exact centering and move more top */
   animation: slideUp 1s ease-out forwards; /* Apply animation */
