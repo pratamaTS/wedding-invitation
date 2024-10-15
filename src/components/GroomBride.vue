@@ -1,7 +1,7 @@
 <template>
   <section class="w-full bg-cream">
     <section class="container-section">
-      <HeaderSection text-color="text-black" title="Mempelai Pria dan Wanita" subtitle="Ya Allah dengan mengharap ridha dan karunia-Mu, Izinkanlah kami mempersatukan dua insan dari dua keluarga ini agar menjadi pasangan yang selalu mendapakan rahmat-Mu" />
+      <HeaderSection text-color="text-black" title="Mempelai Pria dan Wanita" subtitle="Ya Allah dengan mengharap ridha dan karunia-Mu, Izinkanlah kami mempersatukan dua insan dari dua keluarga ini agar menjadi pasangan yang selalu mendapatkan rahmat-Mu" />
       <Profile></Profile>
     </section>
   </section>
