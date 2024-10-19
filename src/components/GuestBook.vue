@@ -142,9 +142,12 @@ button {
             id="JumlahTamu"
             required
           >
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
+
+            <!-- Placeholder Option -->
+            <option value="" disabled selected>Pilih jumlah tamu</option>
+
+            <!-- Dynamically render options based on Kehadiran -->
+            <option v-for="option in jumlahTamuOptions" :key="option" :value="option">{{ option }}</option>
           </select>
         </div>
         <!-- Guest Message -->
@@ -228,7 +231,7 @@ import Alert from "@/components/Alert.vue";
 // Data bindings
 const Nama = ref('');
 const Kehadiran = ref('Hadir'); 
-const JumlahTamu = ref(0);
+const JumlahTamu = ref('');
 const Pesan = ref('');
 const comments = ref([]);
 const statusResponse = ref(false);
@@ -242,6 +245,18 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 const loadingData = ref(false);
 const loadingNextPage = ref(false);
+
+// Dynamic options for Jumlah Tamu
+const jumlahTamuOptions = ref([1, 2]);
+
+// Watch for changes in Kehadiran and update Jumlah Tamu options
+watch(Kehadiran, (newValue) => {
+  if (newValue === 'Hadir') {
+    jumlahTamuOptions.value = [1, 2]; // When Kehadiran is "Hadir", show 1 and 2
+  } else {
+    jumlahTamuOptions.value = [0]; // When Kehadiran is "Tidak Hadir", show only 0
+  }
+});
 
 // Fetch comments from the backend with pagination
 const fetchComments = async (page = 1) => {
@@ -272,6 +287,7 @@ const fetchComments = async (page = 1) => {
   } finally {
     loadingData.value = false;
     loadingNextPage.value = false;
+    JumlahTamu.value = ''
   }
 };
 
