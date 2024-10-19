@@ -158,6 +158,7 @@ button {
             id="Pesan"
             cols="30"
             rows="5"
+            required
           ></textarea>
         </div>
         <!-- Submit -->
