@@ -4,7 +4,7 @@
     <div 
       :class="statusResponse ? 'bg-green-500' : 'bg-red-500'" 
       class="w-10/12 text-gray-100 p-2 text-center rounded-lg duration-300" >
-      {{ statusResponse ? 'Mensaje enviado con exito' : 'El mensaje no se pudo enviar' }}
+      {{ statusResponse ? 'Komentar anda berhasil disimpan' : 'Gagal menyimpan komentar pada buku tamu' }}
     </div>
     <button 
       @click="emits('close')" class="text-black px-1 w-2/12 grid place-items-center border border-gray-600 rounded-lg">

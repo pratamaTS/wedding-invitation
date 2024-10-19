@@ -19,5 +19,15 @@
     server: {
       host: true
     },
+    server: {
+      proxy: {
+        "/api": {
+          changeOrigin: true,
+          target: "http://localhost:8000",
+          historyApiFallback: true,
+        }
+      },
+      host: true
+    },
     base: '/'
   })
