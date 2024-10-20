@@ -1,16 +1,26 @@
 <style scoped>
+/* Default font size */
+.footer-count {
+  font-size: 16px;
+  display: inline-block;
+}
+
+/* Frame styling */
 .frame {
   @apply w-4/12 rotate-180;
 }
 
+/* Input wrapper adjustments for mobile responsiveness */
 .input-wrapper {
   @apply w-full flex flex-wrap gap-1 mb-3;
 }
 
+/* Label styling */
 label {
   @apply text-gray-600 font-medium;
 }
 
+/* Input, textarea, select styling */
 input,
 textarea,
 select,
@@ -18,23 +28,20 @@ option {
   @apply px-2 py-3 rounded-lg bg-gray-800 border border-gray-100 shadow-lg duration-300 focus:border-gray-500 text-gray-200 placeholder:text-gray-400;
 }
 
+/* Button styling */
 button {
   @apply bg-gray-800 text-gray-100 mt-6 rounded-lg py-2 font-medium cursor-pointer active:scale-90 border-gray-500 duration-300;
 }
 
+/* Comments section styling */
 .comments-section {
   @apply w-full mt-8 p-6 bg-gray-50 rounded-lg shadow-lg;
 }
 
+/* Comments content section with scrollbar hidden */
 .comments-content {
   @apply max-h-[400px] overflow-y-auto;
   overflow-x: hidden;
-}
-
-/* Hide scrollbar but allow scrolling */
-.comments-content {
-  max-height: 400px;
-  overflow-y: scroll;
   -ms-overflow-style: none;  /* Hide scrollbar in Internet Explorer and Edge */
   scrollbar-width: none;  /* Hide scrollbar in Firefox */
 }
@@ -43,15 +50,21 @@ button {
   display: none;  /* Hide scrollbar in Chrome, Safari, and other WebKit-based browsers */
 }
 
+/* Comment card styling */
 .comment-card {
   @apply mb-4 p-4 border border-gray-200 rounded-lg shadow-sm bg-white flex gap-4;
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
+  align-items: flex-start; /* Align content at the top */
 }
 
+/* Avatar styling */
 .avatar {
   @apply w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white font-bold text-lg;
+  margin-right: 10px; /* Add space between avatar and name */
 }
 
+/* Comment content styling */
 .comment-content {
   @apply flex-1;
   display: flex;
@@ -59,14 +72,17 @@ button {
   justify-content: space-between;
 }
 
+/* Comment header styling */
 .comment-header {
   @apply flex items-center justify-between mb-2 gap-1;
+  flex-wrap: wrap; /* Allow wrapping when screen is smaller */
 }
 
 .comment-name {
   @apply font-semibold text-gray-800;
 }
 
+/* Comment text styling */
 .comment-text {
   @apply text-gray-700 mb-2;
   word-wrap: break-word;
@@ -74,24 +90,104 @@ button {
   overflow-wrap: break-word;
 }
 
+/* Comment meta information styling */
 .comment-meta {
   @apply flex justify-between items-center w-full;
+  flex-wrap: wrap;
 }
 
-.comment-date {
-  @apply text-gray-500 text-sm text-right;
-}
-
+/* Date and guest count styling */
+.comment-date,
 .guest-count {
-  @apply text-gray-500 text-sm text-left;
+  @apply text-gray-500 text-sm;
 }
 
+/* Badge styling for "Hadir" and "Tidak Hadir" */
 .badge-hadir {
   @apply bg-green-100 text-green-600 text-xs font-medium px-3 py-1 rounded-full;
 }
 
 .badge-tidak-hadir {
   @apply bg-red-100 text-red-600 text-xs font-medium px-3 py-1 rounded-full;
+}
+
+/* Media queries for responsive design */
+/* Medium screens (tablets, small desktops) */
+@media (max-width: 1024px) {
+  .footer-count {
+    font-size: 12px;
+  }
+}
+
+/* Adjusting avatar, font sizes for small screens */
+@media (max-width: 768px) {
+  .footer-count {
+    font-size: 10px;
+  }
+  
+  .comment-card {
+    flex-direction: row;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 12px; /* Smaller initials inside avatar */
+  }
+
+  .comment-name {
+    font-size: 12px; /* Smaller font for the name */
+  }
+
+  .badge-hadir,
+  .badge-tidak-hadir {
+    font-size: 10px; /* Smaller font for the badge */
+    padding: 3px 8px; /* Reduce padding */
+  }
+
+  .comment-text {
+    font-size: 12px; /* Reduce font size for the comment text */
+  }
+}
+
+/* Further adjustments for extra small screens */
+@media (max-width: 480px) {
+  .footer-count {
+    font-size: 8px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.875rem;
+  }
+
+  .comment-name {
+    font-size: 12px;
+  }
+
+  .comment-text {
+    font-size: 0.60rem;
+  }
+
+  .badge-hadir, .badge-tidak-hadir {
+    font-size: 0.5rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  /* Ensure avatar stays left and badges are responsive */
+  .comment-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .comment-meta {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 </style>
 
@@ -234,14 +330,14 @@ button {
           </div>
         </div>
         <div class="flex justify-center items-center space-x-2 text-center text-gray-800" style="padding-top: 20px;">
-          <p class="guest-count text-lg font-semibold">{{ comments.length }} <span class="text-gray-500">komentar</span></p>
+          <p class="footer-count text-lg font-semibold">{{ comments.length }} <span class="text-gray-500">komentar</span></p>
           <div class="flex items-center text-gray-800 font-bold leading-none" style="padding-bottom: 5px; font-size: large;">.</div>
-          <p class="guest-count text-lg font-semibold bg-green-100 text-green-600 px-2 py-0.5 rounded-full">
-            {{ countHadir }} <span class="text-sm text-green-600">Hadir</span>
+          <p class="footer-count text-lg font-semibold bg-green-100 text-green-600 px-2 py-0.5 rounded-full">
+            {{ countHadir }} <span class="footer-count text-sm text-green-600">Hadir</span>
           </p>
           <div class="flex items-center text-gray-800 font-bold leading-none" style="padding-bottom: 5px; font-size: large;">.</div>
-          <p class="guest-count text-lg font-semibold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
-            {{ countTidakHadir }} <span class="text-sm text-red-600">Tidak Hadir</span>
+          <p class="footer-count text-lg font-semibold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+            {{ countTidakHadir }} <span class="footer-count text-sm text-red-600">Tidak Hadir</span>
           </p>
         </div>
       </section>
