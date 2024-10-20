@@ -94,18 +94,31 @@ button {
 .comment-meta {
   @apply flex justify-between items-center w-full;
   flex-wrap: wrap;
+  justify-content: space-between; /* Ensure content is pushed to the edges */
 }
 
 /* Date and guest count styling */
-.guest-count,
-.comment-date {
-  @apply text-gray-500 text-sm;
-  flex: 1; /* Allow both to take equal space */
-  text-align: left;
+.comment-date,
+.guest-count {
+  @apply text-gray-500 text-xs flex items-center; /* Ensure they align horizontally */
 }
 
-.comment-date {
-  text-align: right; /* Align date to the right */
+.guest-count i,
+.comment-date i {
+  margin-right: 5px; /* Add some space between the icon and text */
+}
+
+/* Additional container for date and guest count */
+.comment-meta {
+  justify-content: flex-end; /* Align the content to the right */
+  width: 100%;
+  display: flex;
+  gap: 15px; /* Add gap between guest count and date */
+}
+
+.comment-meta p {
+  display: flex;
+  align-items: center; /* Ensure proper vertical alignment */
 }
 
 /* Badge styling for "Hadir" and "Tidak Hadir" */
@@ -155,16 +168,17 @@ button {
     font-size: 12px; /* Reduce font size for the comment text */
   }
 
-  .guest-count,
-  .comment-date {
-    font-size: 10px; /* Adjust font size for small screens */
-    flex-basis: 100%; /* Each takes full width on small screens */
-    text-align: left; /* Align both left for better stacking */
-    margin-bottom: 5px; /* Add spacing between guest count and date */
+  /* Guest count and date adjustments */
+  .comment-meta {
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 100%;
+    text-align: right;
   }
 
-  .comment-meta {
-    flex-direction: column; /* Stack guest count and date vertically on smaller screens */
+  .guest-count,
+  .comment-date {
+    font-size: 10px; /* Reduce size for smaller screens */
   }
 }
 
@@ -202,15 +216,17 @@ button {
     flex-wrap: wrap;
   }
   
-  .guest-count,
-  .comment-date {
-    font-size: 8px; /* Further reduce the font size for extra small screens */
-    text-align: left; /* Align both to the left */
+  .comment-meta {
+    justify-content: flex-end;
+    flex-direction: row;
+    width: 100%;
+    text-align: right;
+    gap: 10px;
   }
 
-  .comment-meta {
-    flex-direction: column; /* Ensure vertical stacking */
-    justify-content: flex-start; /* Align items to the start */
+  .guest-count,
+  .comment-date {
+    font-size: 10px; /* Adjust further for smaller screens */
   }
 }
 </style>
