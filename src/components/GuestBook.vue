@@ -276,6 +276,7 @@ const currentPage = ref(1);
 const totalPages = ref(1);
 const loadingData = ref(false);
 const loadingNextPage = ref(false);
+const observerTarget = ref(null);
 
 // Dynamic options for Jumlah Tamu
 const jumlahTamuOptions = ref([1, 2]);
@@ -304,7 +305,7 @@ const fetchComments = async (page = 1) => {
     const response = await axios.get("https://gateway-wedding.harjonan.id/api/guest/comments", {
       params: {
         page: page,
-        per_page: 5, // Limit to 5 per page
+        per_page: 500, // Limit to 5 per page
         sort_by: 'created_at',
         sort_order: 'desc',
         search: ''
@@ -327,6 +328,8 @@ const fetchComments = async (page = 1) => {
 
 // Intersection observer to trigger next page load when reaching bottom of the comments section
 const observeScroll = (entries) => {
+  console.log("run scroll")
+  console.log("current page: ", currentPage.value)
   const [entry] = entries;
   if (entry.isIntersecting && currentPage.value < totalPages.value) {
     fetchComments(currentPage.value + 1); // Fetch next page
