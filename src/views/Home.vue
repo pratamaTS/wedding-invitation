@@ -32,7 +32,7 @@ const miniButton = ref(null)
 const handleOpen = () => {
   canScroll.value = true
   if (miniButton.value) {
-    miniButton.value.startMusic();
+    miniButton.value.backgroundMusicAction();
   }
 }
 
