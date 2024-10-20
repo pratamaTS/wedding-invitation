@@ -82,6 +82,10 @@ const giftAction = () => {
   }, 300);
 };
 
+// Expose the startMusic function to the parent component
+defineExpose({
+  startMusic
+});
 
 // Add an event listener for user interaction to start music in Safari
 const clickHandler = () => {

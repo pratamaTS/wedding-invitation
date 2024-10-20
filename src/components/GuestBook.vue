@@ -23,7 +23,7 @@ button {
 }
 
 .comments-section {
-  @apply w-full mt-8 p-6 bg-white rounded-lg shadow-lg;
+  @apply w-full mt-8 p-6 bg-gray-50 rounded-lg shadow-lg;
 }
 
 .comments-content {
@@ -44,7 +44,8 @@ button {
 }
 
 .comment-card {
-  @apply mb-4 p-4 border border-gray-200 rounded-lg shadow-sm bg-white flex items-start gap-4;
+  @apply mb-4 p-4 border border-gray-200 rounded-lg shadow-sm bg-white flex gap-4;
+  display: flex;
 }
 
 .avatar {
@@ -53,7 +54,9 @@ button {
 
 .comment-content {
   @apply flex-1;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .comment-header {
@@ -71,12 +74,16 @@ button {
   overflow-wrap: break-word;
 }
 
+.comment-meta {
+  @apply flex justify-between items-center w-full;
+}
+
 .comment-date {
-  @apply text-gray-500 text-sm;
+  @apply text-gray-500 text-sm text-right;
 }
 
 .guest-count {
-  @apply text-gray-500 text-sm;
+  @apply text-gray-500 text-sm text-left;
 }
 
 .badge-hadir {
@@ -193,25 +200,49 @@ button {
           </div>
           <div v-else-if="comments.length > 0 && !loadingData">
             <div v-for="comment in comments" :key="comment.id" class="comment-card">
-              <!-- Avatar with Initials -->
-              <div class="avatar">{{ getInitials(comment.name) }}</div>
+            <!-- Avatar with Initials -->
+            <div class="avatar">{{ getInitials(comment.name) }}</div>
 
-              <div class="comment-content">
-                <div class="comment-header">
-                  <span class="comment-name">{{ comment.name }}</span>
-                  <!-- Dynamic Badge based on Status -->
-                  <span :class="comment.status === 'Hadir' ? 'badge-hadir' : 'badge-tidak-hadir'">{{ comment.status }}</span>
-                </div>
-                <p class="comment-text">{{ comment.comment }}</p>
-                <p class="guest-count">Jumlah Tamu: {{ comment.guest_count }}</p>
-                <small class="comment-date">{{ comment.created_date }}</small>
+            <div class="comment-content">
+              <div class="comment-header">
+                <span class="comment-name">{{ comment.name }}</span>
+                <!-- Dynamic Badge based on Status -->
+                <span :class="comment.status === 'Hadir' ? 'badge-hadir' : 'badge-tidak-hadir'">
+                  <i :class="comment.status === 'Hadir' ? 'fa fa-check-circle' : 'fa fa-times-circle'"></i> 
+                  {{ comment.status }}
+                </span>
+              </div>
+              <p class="comment-text">{{ comment.comment }}</p>
+              
+              <!-- New row for guest count and created date under comment content -->
+              <div class="flex justify-between items-center text-gray-800 mt-2 text-sm w-full">
+                <p class="guest-count flex items-center" style="font-size:x-small;">
+                  <i class="fa fa-users text-gray-500 text-xs mr-1"></i> 
+                  Tamu: {{ comment.guest_count }}
+                </p>
+                <p class="comment-date flex items-center" style="font-size:x-small;">
+                  <i class="fa fa-clock text-gray-500 text-xs mr-1"></i> 
+                  {{ comment.created_date }}
+                </p>
               </div>
             </div>
+          </div>
           </div>
           <!-- Loader for infinite scrolling -->
           <div v-if="loadingNextPage" class="text-center py-4 text-gray-800">
             <i class="fa fa-spinner fa-spin text-gray-800"></i> Loading more comments...
           </div>
+        </div>
+        <div class="flex justify-center items-center space-x-2 text-center text-gray-800" style="padding-top: 20px;">
+          <p class="guest-count text-lg font-semibold">{{ comments.length }} <span class="text-gray-500">komentar</span></p>
+          <div class="flex items-center text-gray-800 font-bold leading-none" style="padding-bottom: 5px; font-size: large;">.</div>
+          <p class="guest-count text-lg font-semibold bg-green-100 text-green-600 px-2 py-0.5 rounded-full">
+            {{ countHadir }} <span class="text-sm text-green-600">Hadir</span>
+          </p>
+          <div class="flex items-center text-gray-800 font-bold leading-none" style="padding-bottom: 5px; font-size: large;">.</div>
+          <p class="guest-count text-lg font-semibold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+            {{ countTidakHadir }} <span class="text-sm text-red-600">Tidak Hadir</span>
+          </p>
         </div>
       </section>
 
@@ -223,7 +254,7 @@ button {
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import axios from "axios";
 import HeaderSection from "@/components/HeaderSection.vue";
 import Alert from "@/components/Alert.vue";
@@ -248,6 +279,9 @@ const loadingNextPage = ref(false);
 
 // Dynamic options for Jumlah Tamu
 const jumlahTamuOptions = ref([1, 2]);
+// Count functions
+const countHadir = computed(() => comments.value.filter(comment => comment.status === 'Hadir').length);
+const countTidakHadir = computed(() => comments.value.filter(comment => comment.status === 'Tidak Hadir').length);
 
 // Watch for changes in Kehadiran and update Jumlah Tamu options
 watch(Kehadiran, (newValue) => {

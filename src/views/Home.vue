@@ -1,7 +1,7 @@
 <template>
   <section :class="{ 'no-scroll': !canScroll }">
     <MainCover id="mainCover" @open="handleOpen"></MainCover>
-    <MiniButton>
+    <MiniButton ref="miniButton">
       Scroll to the top
     </MiniButton>
     <FirstSight id="firstSight"></FirstSight>
@@ -27,9 +27,13 @@ import GuestBook from '@/components/GuestBook.vue'
 import MiniButton from '@/components/MiniButton.vue'
 
 const canScroll = ref(false)
+const miniButton = ref(null)
 
 const handleOpen = () => {
   canScroll.value = true
+  if (miniButton.value) {
+    miniButton.value.startMusic();
+  }
 }
 
 // Navigation handler
