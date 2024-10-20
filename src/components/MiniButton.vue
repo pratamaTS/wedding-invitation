@@ -34,6 +34,8 @@ const startMusic = async () => {
       // Safari-specific handling
       if (audio.paused && audio.readyState === 4) {
         audio.muted = false; // Unmute the audio
+        
+        audio.volume = 1;
         audio.currentTime = reffStartTime;
         await audio.play();
         isPlaying.value = true;
@@ -49,18 +51,21 @@ const startMusic = async () => {
 // Function to toggle music play/pause
 const backgroundMusicAction = () => {
   if (isPlaying.value) {
+    // If currently playing, pause the audio
     audio.pause();
-    musicIcon.value = 'fa-solid fa-volume-off';
+    musicIcon.value = 'fa-solid fa-volume-off'; // Change the icon to volume off
   } else {
-    if (!hasInteracted.value) {
-      startMusic(); // Ensure user interaction before playing
-    } else {
-      audio.currentTime = reffStartTime;
-      audio.play();
-      musicIcon.value = 'fa-solid fa-volume-high';
-    }
+    // If currently paused, play the audio from the current position
+    audio.muted = false; // Unmute the audio
+        
+    audio.volume = 1;
+    audio.play().then(() => {
+      musicIcon.value = 'fa-solid fa-volume-high'; // Change the icon to volume high when playing
+    }).catch((error) => {
+      console.error('Error playing the audio:', error); // Catch any play errors
+    });
   }
-  isPlaying.value = !isPlaying.value;
+  isPlaying.value = !isPlaying.value; // Toggle the isPlaying state
 };
 
 // Loop the specific part of the audio
@@ -77,23 +82,24 @@ const giftAction = () => {
   }, 300);
 };
 
+
+// Add an event listener for user interaction to start music in Safari
+const clickHandler = () => {
+  startMusic();
+  window.removeEventListener('click', clickHandler);
+};
+
 // Make sure we properly handle browser autoplay policies
 onMounted(() => {
   // Mute the audio initially to prevent autoplay issues
   audio.muted = true;
-
-  // Add an event listener for user interaction to start music in Safari
-  const clickHandler = () => {
-    startMusic();
-    window.removeEventListener('click', clickHandler);
-  };
+  audio.volume = 0;
 
   window.addEventListener('click', clickHandler, { once: true });
 });
 
 onUnmounted(() => {
   audio.pause();
-  audio.removeEventListener('timeupdate', handleTimeUpdate);
 });
 </script>
 

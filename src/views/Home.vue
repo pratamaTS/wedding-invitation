@@ -1,7 +1,7 @@
 <template>
   <section :class="{ 'no-scroll': !canScroll }">
     <MainCover id="mainCover" @open="handleOpen"></MainCover>
-    <MiniButton @click="() => navigationHandler('#main-cover')">
+    <MiniButton>
       Scroll to the top
     </MiniButton>
     <FirstSight id="firstSight"></FirstSight>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import MainCover from '@/components/MainCover.vue'
 import FirstSight from '@/components/FirstSight.vue'
 import GroomBride from '@/components/GroomBride.vue'
@@ -33,10 +33,17 @@ const handleOpen = () => {
 }
 
 // Navigation handler
-const navigationHandler = id => {
-  document.querySelector(id).scrollIntoView({
-    behavior: 'smooth'
-  })
+const navigationHandler = async id => {
+  await nextTick();  // Ensure DOM has updated if any elements are conditionally rendered
+  const targetElement = document.querySelector(id)
+  
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      behavior: 'smooth'
+    })
+  } else {
+    console.error(`Element with id ${id} not found.`)
+  }
 }
 
 </script>
