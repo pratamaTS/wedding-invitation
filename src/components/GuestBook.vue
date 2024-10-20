@@ -97,9 +97,15 @@ button {
 }
 
 /* Date and guest count styling */
-.comment-date,
-.guest-count {
+.guest-count,
+.comment-date {
   @apply text-gray-500 text-sm;
+  flex: 1; /* Allow both to take equal space */
+  text-align: left;
+}
+
+.comment-date {
+  text-align: right; /* Align date to the right */
 }
 
 /* Badge styling for "Hadir" and "Tidak Hadir" */
@@ -148,6 +154,18 @@ button {
   .comment-text {
     font-size: 12px; /* Reduce font size for the comment text */
   }
+
+  .guest-count,
+  .comment-date {
+    font-size: 10px; /* Adjust font size for small screens */
+    flex-basis: 100%; /* Each takes full width on small screens */
+    text-align: left; /* Align both left for better stacking */
+    margin-bottom: 5px; /* Add spacing between guest count and date */
+  }
+
+  .comment-meta {
+    flex-direction: column; /* Stack guest count and date vertically on smaller screens */
+  }
 }
 
 /* Further adjustments for extra small screens */
@@ -184,9 +202,15 @@ button {
     flex-wrap: wrap;
   }
   
+  .guest-count,
+  .comment-date {
+    font-size: 8px; /* Further reduce the font size for extra small screens */
+    text-align: left; /* Align both to the left */
+  }
+
   .comment-meta {
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column; /* Ensure vertical stacking */
+    justify-content: flex-start; /* Align items to the start */
   }
 }
 </style>
