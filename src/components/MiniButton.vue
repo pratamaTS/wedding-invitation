@@ -94,12 +94,6 @@ onMounted(() => {
   // Mute the audio initially to prevent autoplay issues
   audio.muted = true;
   audio.volume = 0;
-
-  window.addEventListener('click', clickHandler, { once: true });
-});
-
-onUnmounted(() => {
-  audio.pause();
 });
 </script>
 
